@@ -1,8 +1,7 @@
 from social_api import SocialAppApi
 
 
-test_data = {'username': 'username_client1', 'password': 'password',
-             'email': 'email@gmail.com'}
+test_data = {'username': 'username_client', 'password': 'password'}
 
 
 class AutomatedBot:
@@ -10,4 +9,4 @@ class AutomatedBot:
         self.social_api = SocialAppApi()
 
     def start(self):
-        self.social_api.register(data=test_data)
+        self.social_api.login(data=test_data)
