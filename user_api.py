@@ -1,5 +1,5 @@
 import logging
-from clients import ApiClient
+import clients
 
 logging.basicConfig(level=logging.INFO)
 
@@ -7,7 +7,7 @@ logging.basicConfig(level=logging.INFO)
 class UserApiClient:
     def __init__(self, user):
         self.user = user
-        self.client = ApiClient('http://127.0.0.1:8000/')
+        self.client = clients.get_client()
         self._is_registered = False
         self._register_data = {'email': self.user.email,
                                'username': self.user.username,

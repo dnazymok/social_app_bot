@@ -35,3 +35,14 @@ class ApiClient(BaseClient):
         except HTTPError as e:
             logging.error(e)
         return response.json()
+
+
+API_URL = 'http://127.0.0.1:8000/'
+
+CLIENTS = {
+    'rest': ApiClient
+}
+
+
+def get_client(client='rest', api_url=API_URL):
+    return CLIENTS[client](api_url)
