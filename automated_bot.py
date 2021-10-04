@@ -1,12 +1,13 @@
-from social_api import SocialAppApi
-
+from user import User
 
 test_data = {'username': 'username_client', 'password': 'password'}
 
 
 class AutomatedBot:
-    def __init__(self):
-        self.social_api = SocialAppApi()
+    # def __init__(self):
+    #     # self.social_api = UserApiClient()
 
     def start(self):
-        self.social_api.login(data=test_data)
+        user = User(username='username_client_new',
+                    email='usernamenew@gmail.com', password='password')
+        user.api.register()

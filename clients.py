@@ -15,7 +15,7 @@ class BaseClient(ABC):
         pass
 
 
-class RestApiClient(BaseClient):
+class ApiClient(BaseClient):
     def __init__(self, api_url):
         self._api_url = api_url
 
