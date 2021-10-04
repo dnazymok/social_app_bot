@@ -37,7 +37,7 @@ class ApiClient(BaseClient):
         return response.json()
 
 
-API_URL = 'http://127.0.0.1:8000/'
+API_URL = 'http://127.0.0.1:8000/'  # todo in config?
 
 CLIENTS = {
     'rest': ApiClient

@@ -1,5 +1,6 @@
 import logging
 import clients
+from post_factory import FakePostFactory
 
 logging.basicConfig(level=logging.INFO)
 
@@ -8,15 +9,13 @@ class UserApiClient:
     def __init__(self, user):
         self.user = user
         self.client = clients.get_client()
+        self._post_data = FakePostFactory().make_fake_post()
         self._is_registered = False
         self._register_data = {'email': self.user.email,
                                'username': self.user.username,
                                'password': self.user.password}
         self._login_data = {'username': self.user.username,
                             'password': self.user.password}
-        self._post_data = {'title': 'client_title1',
-                           'description': 'client_description1',
-                           'content': 'client_content1'}  # todo remove
         self._token = ''
 
     def register(self):
