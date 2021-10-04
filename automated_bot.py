@@ -1,9 +1,9 @@
-from clients import RestApiClient
+from social_api import SocialAppApi
 
 
 class AutomatedBot:
     def __init__(self):
-        self.client = RestApiClient()
+        self.social_api = SocialAppApi()
 
-    def __call__(self, *args, **kwargs):
-        pass  # todo
+    def start(self):
+        self.social_api.test()
