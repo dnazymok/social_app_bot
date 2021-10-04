@@ -11,3 +11,4 @@ class AutomatedBot:
         user = User(username='username_client_new',
                     email='usernamenew@gmail.com', password='password')
         user.api.register()
+        user.api.login()

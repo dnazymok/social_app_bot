@@ -4,6 +4,7 @@ from clients import ApiClient
 class UserApiClient:
     def __init__(self, user):
         self.client = ApiClient('http://127.0.0.1:8000/')
+        self._is_registered = False
         self._register_data = {'email': user.email,
                                'username': user.username,
                                'password': user.password}
@@ -13,10 +14,13 @@ class UserApiClient:
         self._token = ''
 
     def register(self):
-        self.client.post_request('users/', data=self._register_data)  # todo add logger
+        if not self._is_registered:
+            self.client.post_request('users/', data=self._register_data)  # todo add logger
+            self._is_registered = True
 
     def login(self):
-        self._token = self._get_access_token()
+        if not self._token:
+            self._token = self._get_access_token()
 
     def logout(self):
         self._token = ''
