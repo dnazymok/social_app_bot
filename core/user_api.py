@@ -1,13 +1,13 @@
 import logging
 import clients
-from post_factory import FakePostFactory
+from factories import BasePostFactory
 
 
 class UserApiClient:
-    def __init__(self, user):
+    def __init__(self, user, post_factory: BasePostFactory):
         self.user = user
         self.client = clients.get_client()
-        self._post_data = FakePostFactory().make_fake_post()
+        self._post_data = post_factory().make_post()
         self._is_registered = False
         self._register_data = {'email': self.user.email,
                                'username': self.user.username,

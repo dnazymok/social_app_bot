@@ -1,3 +1,4 @@
+from factories import FakePostFactory
 from user_api import UserApiClient
 
 
@@ -6,4 +7,4 @@ class User:
         self.username = username
         self.password = password
         self.email = email
-        self.api = UserApiClient(self)
+        self.api = UserApiClient(self, FakePostFactory)
