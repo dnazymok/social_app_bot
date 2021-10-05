@@ -2,6 +2,7 @@ import logging
 import clients
 from typing import Type
 from factories import BasePostFactory
+from requests import HTTPError
 
 
 class UserApiClient:
@@ -17,8 +18,12 @@ class UserApiClient:
         self._token = ''
 
     def register(self):
-        self.client.post_request('users/', data=self._register_data)
-        logging.info(f'{self.user.username} registered.')
+        try:
+            self.client.post_request('users/', data=self._register_data)
+        except HTTPError:  # todo custom error from clients.py
+            logging.info(f'{self.user.username} already registered.')
+        else:
+            logging.info(f'{self.user.username} registered.')
 
     def login(self):
         if not self._token:
@@ -33,10 +38,14 @@ class UserApiClient:
         logging.info(f'{self.user.username} created post.')
 
     def like_post(self, post_id):
-        self.client.post_request(f'posts/{post_id}/likes',
-                                 data=self._post_data,
-                                 headers=self._auth_headers)
-        logging.info(f'{self.user.username} liked post {post_id}')
+        try:
+            self.client.post_request(f'posts/{post_id}/likes',
+                                     data=self._post_data,
+                                     headers=self._auth_headers)
+        except HTTPError:  # todo custom error
+            logging.info(f'{self.user.username} already liked post {post_id}')
+        else:
+            logging.info(f'{self.user.username} liked post {post_id}')
 
     def _get_access_token(self):
         response = self.client.post_request('token/', data=self._login_data)

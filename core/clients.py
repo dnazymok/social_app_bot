@@ -46,5 +46,5 @@ CLIENTS = {
 }
 
 
-def get_client(client='rest', api_url=API_URL):
+def get_client(client='rest', api_url=API_URL):  # todo where store it?
     return CLIENTS[client](api_url)
