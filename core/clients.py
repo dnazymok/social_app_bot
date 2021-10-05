@@ -25,7 +25,8 @@ class ApiClient(BaseClient):
             response.raise_for_status()
         except HTTPError as e:
             logging.error(e)
-        return response.json()
+            raise e  # todo custom
+        return response
 
     def get_request(self, path, params=None, auth=None, headers=None):
         try:
@@ -34,7 +35,8 @@ class ApiClient(BaseClient):
             response.raise_for_status()
         except HTTPError as e:
             logging.error(e)
-        return response.json()
+            raise e  # todo custom
+        return response
 
 
 API_URL = 'http://127.0.0.1:8000/'  # todo in config?

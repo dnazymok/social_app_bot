@@ -8,3 +8,4 @@ class AutomatedBot:
         user.api.register()
         user.api.login()
         user.api.create_post()
+        user.api.like_post(30)
