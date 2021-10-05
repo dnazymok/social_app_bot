@@ -2,8 +2,6 @@ import logging
 import clients
 from post_factory import FakePostFactory
 
-logging.basicConfig(level=logging.INFO)
-
 
 class UserApiClient:
     def __init__(self, user):
