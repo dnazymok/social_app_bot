@@ -23,9 +23,10 @@ class UserApiClient:
         self._token = ''
 
     def create_post(self):
-        post_data = self._post_factory().make_post()
-        self._client.post_request('posts/', data=post_data,
+        post = self._post_factory().make_post()
+        self._client.post_request('posts/', data=vars(post),
                                   headers=self._auth_headers)
+        self._user.posts.append(post)
         logging.info(f'{self._user.username} created post.')
 
     def like_post(self, post_id):

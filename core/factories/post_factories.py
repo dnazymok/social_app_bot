@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from faker import Faker
+from post import Post
 
 
 class BasePostFactory(ABC):
@@ -13,6 +14,6 @@ class FakePostFactory(BasePostFactory):
         self.fake = Faker()
 
     def make_post(self):
-        return {'title': self.fake.sentence(),
-                'description': self.fake.sentence(),
-                'content': self.fake.paragraph()}
+        return Post(title=self.fake.sentence(),
+                    description=self.fake.sentence(),
+                    content=self.fake.paragraph())

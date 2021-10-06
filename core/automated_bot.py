@@ -50,3 +50,11 @@ class AutomatedBot:
     #  users login (UserApiClient)
     #  users create posts (PostFactory)
     #  after all users like posts (UserApiClient)
+
+    # 1. get user (who should like)
+    #  need count of users posts
+    # 2.1 get post
+    #  need count of likes of user posts
+    # 2.2 like
+    # 2.3 repeat until reach max likes
+    # 3. repeat
