@@ -15,6 +15,6 @@ class FakeUserFactory(BaseUserFactory):
         self.fake = Faker()
 
     def make_user(self) -> User:
-        return User(username=self.fake.name(),
+        return User(username=self.fake.first_name(),
                     email=self.fake.email(),
                     password=self.fake.password())

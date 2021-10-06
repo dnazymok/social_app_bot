@@ -12,9 +12,8 @@ class AutomatedBot:
         self._users: [User] = []
 
     def start(self):
-        # print(self._config)
         self._create_users()
-        # self._register_users()
+        self._register_users()
         # self._login_users()
         # self._create_posts()
 
@@ -33,7 +32,8 @@ class AutomatedBot:
             logging.info(f'User {user.username} created')
 
     def _register_users(self):
-        pass
+        for user in self._users:
+            user.api.register()
 
     def _login_users(self):
         pass
@@ -46,10 +46,3 @@ class AutomatedBot:
     #  users login (UserApiClient)
     #  users create posts (PostFactory)
     #  after all users like posts (UserApiClient)
-
-    # user = User(username='username_client_new1',
-    #             email='usernamenew@gmail.com', password='password')
-    # user.api.register()
-    # user.api.login()
-    # user.api.create_post()
-    # user.api.like_post(30)
