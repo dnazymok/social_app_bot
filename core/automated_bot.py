@@ -1,7 +1,7 @@
 import logging
-from random import randint
-
 import yaml
+
+from random import randint
 from exceptions import BotConfigNotFoundError
 from factories.user_factories import FakeUserFactory
 from user import User
@@ -17,6 +17,7 @@ class AutomatedBot:
         self._register_users()
         self._login_users()
         self._create_posts()
+        self._like_posts()
 
     def _get_config(self):
         try:
@@ -44,6 +45,9 @@ class AutomatedBot:
         for user in self._users:
             for _ in range(randint(1, self._config['max_posts_per_user'])):
                 user.api.create_post()
+
+    def _like_posts(self):
+        pass
 
     #  users creating (UserFactory)
     #  users register (UserApiClient)

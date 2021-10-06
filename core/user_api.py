@@ -24,8 +24,9 @@ class UserApiClient:
 
     def create_post(self):
         post = self._post_factory().make_post()
-        self._client.post_request('posts/', data=vars(post),
+        response = self._client.post_request('posts/', data=vars(post),
                                   headers=self._auth_headers)
+        post.id = response.json()['id']
         self._user.posts.append(post)
         logging.info(f'{self._user.username} created post.')
 

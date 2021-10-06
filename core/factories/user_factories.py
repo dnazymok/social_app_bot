@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 from faker import Faker
-
 from user import User
 
 
