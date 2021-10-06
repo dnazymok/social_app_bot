@@ -1,5 +1,4 @@
 from exceptions import BotApiException, BotConfigNotFoundError
-
 from automated_bot import AutomatedBot
 
 

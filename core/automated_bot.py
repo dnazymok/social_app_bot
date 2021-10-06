@@ -1,4 +1,5 @@
 import logging
+from random import randint
 
 import yaml
 from exceptions import BotConfigNotFoundError
@@ -14,8 +15,8 @@ class AutomatedBot:
     def start(self):
         self._create_users()
         self._register_users()
-        # self._login_users()
-        # self._create_posts()
+        self._login_users()
+        self._create_posts()
 
     def _get_config(self):
         try:
@@ -36,10 +37,13 @@ class AutomatedBot:
             user.api.register()
 
     def _login_users(self):
-        pass
+        for user in self._users:
+            user.api.login()
 
     def _create_posts(self):
-        pass
+        for user in self._users:
+            for _ in range(randint(1, self._config['max_posts_per_user'])):
+                user.api.create_post()
 
     #  users creating (UserFactory)
     #  users register (UserApiClient)
