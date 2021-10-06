@@ -1,4 +1,4 @@
-from factories import FakePostFactory
+from factories.post_factories import FakePostFactory
 from user_api import UserApiClient
 
 

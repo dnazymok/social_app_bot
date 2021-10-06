@@ -1,7 +1,7 @@
 import logging
 import clients
 from typing import Type
-from factories import BasePostFactory
+from factories.post_factories import BasePostFactory
 
 
 class UserApiClient:

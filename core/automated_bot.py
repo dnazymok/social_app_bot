@@ -1,6 +1,6 @@
 import yaml
 from exceptions import BotConfigNotFoundError
-from user import User
+from factories.user_factories import FakeUserFactory
 
 
 class AutomatedBot:
