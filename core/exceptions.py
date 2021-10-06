@@ -1,0 +1,2 @@
+class BotApiException(Exception):
+    pass

@@ -1,4 +1,4 @@
-from requests import HTTPError
+from exceptions import BotApiException
 
 from automated_bot import AutomatedBot
 
@@ -11,7 +11,7 @@ def main():
     else:
         try:
             bot.start()
-        except HTTPError as e:  # todo custom error
+        except BotApiException as e:
             logging.error(e)
 
 

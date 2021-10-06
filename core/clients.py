@@ -1,7 +1,7 @@
 import requests
-import logging
 from abc import ABC, abstractmethod
 from requests import HTTPError
+from exceptions import BotApiException
 
 
 class BaseClient(ABC):
@@ -24,7 +24,7 @@ class ApiClient(BaseClient):
                                      headers=headers)
             response.raise_for_status()
         except HTTPError as e:
-            raise e  # todo custom
+            raise BotApiException(e)
         return response
 
     def get_request(self, path, params=None, auth=None, headers=None):
@@ -33,7 +33,7 @@ class ApiClient(BaseClient):
                                     headers=headers)
             response.raise_for_status()
         except HTTPError as e:
-            raise e  # todo custom
+            raise BotApiException(e)
         return response
 
 
