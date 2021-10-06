@@ -24,7 +24,6 @@ class ApiClient(BaseClient):
                                      headers=headers)
             response.raise_for_status()
         except HTTPError as e:
-            logging.error(e)
             raise e  # todo custom
         return response
 
@@ -34,7 +33,6 @@ class ApiClient(BaseClient):
                                     headers=headers)
             response.raise_for_status()
         except HTTPError as e:
-            logging.error(e)
             raise e  # todo custom
         return response
 

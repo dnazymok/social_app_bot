@@ -9,3 +9,9 @@ class AutomatedBot:
         user.api.login()
         user.api.create_post()
         user.api.like_post(30)
+
+    #  users creating (UserFactory)
+    #  users register (UserApiClient)
+    #  users login (UserApiClient)
+    #  users create posts (PostFactory)
+    #  after all users like posts (UserApiClient)

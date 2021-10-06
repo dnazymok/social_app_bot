@@ -1,3 +1,5 @@
+from requests import HTTPError
+
 from automated_bot import AutomatedBot
 
 
@@ -9,8 +11,8 @@ def main():
     else:
         try:
             bot.start()
-        except:
-            pass  # todo custom error
+        except HTTPError as e:  # todo custom error
+            logging.error(e)
 
 
 if __name__ == '__main__':
