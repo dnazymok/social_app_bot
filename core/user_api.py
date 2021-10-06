@@ -2,7 +2,6 @@ import logging
 import clients
 from typing import Type
 from factories import BasePostFactory
-from requests import HTTPError
 
 
 class UserApiClient:

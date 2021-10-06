@@ -1,4 +1,4 @@
-from exceptions import BotApiException
+from exceptions import BotApiException, BotConfigNotFoundError
 
 from automated_bot import AutomatedBot
 
@@ -6,8 +6,8 @@ from automated_bot import AutomatedBot
 def main():
     try:
         bot = AutomatedBot()
-    except:  # todo custom errors about init
-        pass
+    except BotConfigNotFoundError as e:
+        logging.error(e)
     else:
         try:
             bot.start()
