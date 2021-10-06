@@ -1,15 +1,19 @@
+import logging
+
 import yaml
 from exceptions import BotConfigNotFoundError
 from factories.user_factories import FakeUserFactory
+from user import User
 
 
 class AutomatedBot:
     def __init__(self):
         self._config = self._get_config()
+        self._users: [User] = []
 
     def start(self):
-        print(self._config)
-        # self._create_users()
+        # print(self._config)
+        self._create_users()
         # self._register_users()
         # self._login_users()
         # self._create_posts()
@@ -23,10 +27,10 @@ class AutomatedBot:
             raise BotConfigNotFoundError(e)
 
     def _create_users(self):
-        try:
-            pass
-        except:
-            pass
+        for _ in range(self._config['number_of_users']):
+            user = FakeUserFactory().make_user()
+            self._users.append(user)
+            logging.info(f'User {user.username} created')
 
     def _register_users(self):
         pass
