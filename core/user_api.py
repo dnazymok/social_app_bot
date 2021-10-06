@@ -8,7 +8,7 @@ class UserApiClient:
     def __init__(self, user, post_factory: Type[BasePostFactory]):
         self._user = user
         self._client = clients.get_client()
-        self._post_data = post_factory().make_post()
+        self._post_factory = post_factory
         self._token = ''
 
     def register(self):
@@ -23,13 +23,13 @@ class UserApiClient:
         self._token = ''
 
     def create_post(self):
-        self._client.post_request('posts/', data=self._post_data,
+        post_data = self._post_factory().make_post()
+        self._client.post_request('posts/', data=post_data,
                                   headers=self._auth_headers)
         logging.info(f'{self._user.username} created post.')
 
     def like_post(self, post_id):
         self._client.post_request(f'posts/{post_id}/likes',
-                                  data=self._post_data,
                                   headers=self._auth_headers)
         logging.info(f'{self._user.username} liked post {post_id}')
 
