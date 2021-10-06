@@ -21,3 +21,7 @@ class User:
     def login_data(self):
         return {'username': self.username,
                 'password': self.password}
+
+    @property
+    def posts_count(self):
+        return len(self.posts)

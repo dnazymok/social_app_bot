@@ -46,8 +46,16 @@ class AutomatedBot:
             for _ in range(randint(1, self._config['max_posts_per_user'])):
                 user.api.create_post()
 
-    def _like_posts(self):
-        pass
+    def _like_posts(self):  # todo has not reached max likes
+        user_with_most_posts = self._get_user_with_most_posts()
+
+    def _get_user_with_most_posts(self, users: [User]):  # todo in another class
+        for user in users:
+            user_with_most_posts = user
+            if user.posts_count > user_with_most_posts.posts_count:
+                user_with_most_posts = user
+        return user_with_most_posts
+
 
     #  users creating (UserFactory)
     #  users register (UserApiClient)
