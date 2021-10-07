@@ -12,7 +12,7 @@ from config import Config
 class AutomatedBot:
     def __init__(self, user_factory: Type[BaseUserFactory],
                  post_factory: Type[BasePostFactory]):
-        self._config = Config().get_config()
+        self._config = Config()
         self._users: [User] = []
         self._user_factory = user_factory()
         self._post_factory = post_factory()
@@ -25,7 +25,7 @@ class AutomatedBot:
         self._like_posts()
 
     def _create_users(self):
-        for _ in range(self._config['number_of_users']):
+        for _ in range(self._config.data['number_of_users']):
             user = self._user_factory.make_user()
             self._users.append(user)
             logging.info(f'User {user.username} created')
@@ -41,7 +41,7 @@ class AutomatedBot:
     def _create_posts(self):
         for user in self._users:
             for _ in range(
-                    random.randint(1, self._config['max_posts_per_user'])):
+                    random.randint(1, self._config.data['max_posts_per_user'])):
                 post = self._post_factory.make_post()
                 response = user.api.create_post(post)
                 post.id = response.json()['id']
@@ -49,4 +49,4 @@ class AutomatedBot:
 
     def _like_posts(self):
         LikesGeneratorService(self._users,
-                              self._config['max_likes_per_user']).start()
+                              self._config.data['max_likes_per_user']).start()

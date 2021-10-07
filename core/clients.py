@@ -4,7 +4,7 @@ from requests import HTTPError
 from exceptions import BotApiException
 from config import Config
 
-config = Config().get_config()
+config = Config()
 
 
 class BaseClient(ABC):
@@ -45,5 +45,5 @@ CLIENTS = {
 }
 
 
-def get_client(client='rest', api_url=config['api_url']):
+def get_client(client='rest', api_url=config.data['api_url']):
     return CLIENTS[client](api_url)
