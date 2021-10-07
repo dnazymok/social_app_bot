@@ -48,25 +48,29 @@ class AutomatedBot:
                     random.randint(1, self._config['max_posts_per_user'])):
                 user.api.create_post()
 
-    def _like_posts(self):  # todo cant self like
+    def _like_posts(self):
         all_posts = self._get_all_posts(self._users)
         users_by_posts_count = self._sort_users_by_posts_count(self._users)
 
-        while True:
-            for user in users_by_posts_count:
-                for i in range(self._config['max_likes_per_user']):
-                    users_with_zero_liked_post = self._get_users_with_zero_liked_post(
-                        self._users)
-                    posts_to_like = self._get_posts_from_users(
-                        users_with_zero_liked_post)
+        for user in users_by_posts_count:
+            users_with_zero_liked_post = self._get_users_with_zero_liked_post(
+                self._users)
+            if not users_with_zero_liked_post:
+                break
+            posts_to_like = self._get_posts_from_users(
+                users_with_zero_liked_post)
+            if user in users_with_zero_liked_post:
+                users_with_zero_liked_post.remove(user)
+            for i in range(self._config['max_likes_per_user']):
+                if posts_to_like:
                     post = random.choice(posts_to_like)
                     response = user.api.like_post(post.id)
                     if response.status_code == 201:
                         self._get_post_by_id(all_posts, post.id)
                         like = Like(user=user, post=post)
                         post.likes.append(like)
-            if not users_with_zero_liked_post:
-                break
+                    if post in posts_to_like:
+                        posts_to_like.remove(post)
 
     def _sort_users_by_posts_count(self, users):
         return sorted(users, key=lambda user: user.posts_count, reverse=True)

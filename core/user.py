@@ -29,3 +29,4 @@ class User:
     @property
     def is_zero_liked_post(self):
         return not all([post.likes for post in self.posts])
+
