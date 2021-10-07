@@ -1,14 +1,11 @@
 import logging
 import clients
-from typing import Type
-from factories.post_factories import BasePostFactory
 
 
 class UserApiClient:
-    def __init__(self, user, post_factory: Type[BasePostFactory]):
+    def __init__(self, user):
         self._user = user
         self._client = clients.get_client()
-        self._post_factory = post_factory
         self._token = ''
 
     def register(self):
@@ -22,13 +19,11 @@ class UserApiClient:
     def logout(self):
         self._token = ''
 
-    def create_post(self):
-        post = self._post_factory().make_post()
+    def create_post(self, post):
         response = self._client.post_request('posts/', data=vars(post),
                                              headers=self._auth_headers)
-        post.id = response.json()['id']
-        self._user.posts.append(post)  # todo in another class
         logging.info(f'{self._user.username} created post.')
+        return response
 
     def like_post(self, post_id):
         response = self._client.post_request(f'posts/{post_id}/likes',

@@ -1,10 +1,12 @@
 from exceptions import BotApiException, BotConfigNotFoundError
 from automated_bot import AutomatedBot
+from factories.user_factories import FakeUserFactory
+from factories.post_factories import FakePostFactory
 
 
 def main():
     try:
-        bot = AutomatedBot()
+        bot = AutomatedBot(FakeUserFactory, FakePostFactory)
     except BotConfigNotFoundError as e:
         logging.error(e)
     else:

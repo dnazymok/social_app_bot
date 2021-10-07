@@ -1,4 +1,3 @@
-from factories.post_factories import FakePostFactory
 from post import Post
 from user_api import UserApiClient
 
@@ -9,7 +8,7 @@ class User:
         self.password = password
         self.email = email
         self.posts: [Post] = []
-        self.api = UserApiClient(self, FakePostFactory)
+        self.api = UserApiClient(self)
 
     @property
     def register_data(self):
