@@ -6,13 +6,13 @@ from factories.user_factories import BaseUserFactory
 from factories.post_factories import BasePostFactory
 from user import User
 from services import LikesGeneratorService
-from config import Config
 
 
 class AutomatedBot:
     def __init__(self, user_factory: Type[BaseUserFactory],
-                 post_factory: Type[BasePostFactory]):
-        self._config = Config()
+                 post_factory: Type[BasePostFactory],
+                 config):
+        self._config = config()
         self._users: [User] = []
         self._user_factory = user_factory()
         self._post_factory = post_factory()
