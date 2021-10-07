@@ -2,6 +2,9 @@ import requests
 from abc import ABC, abstractmethod
 from requests import HTTPError
 from exceptions import BotApiException
+from config import Config
+
+config = Config().get_config()
 
 
 class BaseClient(ABC):
@@ -37,12 +40,10 @@ class ApiClient(BaseClient):
         return response
 
 
-API_URL = 'http://127.0.0.1:8000/'  # todo in config?
-
 CLIENTS = {
     'rest': ApiClient
 }
 
 
-def get_client(client='rest', api_url=API_URL):  # todo where store it?
+def get_client(client='rest', api_url=config['api_url']):
     return CLIENTS[client](api_url)

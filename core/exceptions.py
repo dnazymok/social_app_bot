@@ -2,5 +2,5 @@ class BotApiException(Exception):
     pass
 
 
-class BotConfigNotFoundError(Exception):
+class ConfigNotFoundError(Exception):
     pass
