@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from faker import Faker
-from core.post import Post
+from core.models import Post
 
 
 class BasePostFactory(ABC):

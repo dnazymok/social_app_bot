@@ -1,7 +1,6 @@
 import random
 
-from core.user import User
-from core.post import Post, Like
+from core.models import User, Post, Like
 
 
 class LikesGeneratorService:

@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from faker import Faker
-from core.user import User
+from core.models import User
 
 
 class BaseUserFactory(ABC):

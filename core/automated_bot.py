@@ -4,7 +4,7 @@ import random
 from typing import Type
 from core.factories.user_factories import BaseUserFactory
 from core.factories.post_factories import BasePostFactory
-from core.user import User
+from core.models import User
 from core.services import LikesGeneratorService
 
 
