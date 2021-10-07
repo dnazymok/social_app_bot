@@ -3,6 +3,7 @@ from core.automated_bot import AutomatedBot
 from core.factories.user_factories import FakeUserFactory
 from core.factories.post_factories import FakePostFactory
 from core.config import Config
+from requests.exceptions import ConnectionError
 
 
 def main():
@@ -13,7 +14,7 @@ def main():
     else:
         try:
             bot.start()
-        except BotApiException as e:
+        except (ConnectionError, BotApiException) as e:
             logging.error(e)
 
 
