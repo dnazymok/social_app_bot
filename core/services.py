@@ -8,7 +8,7 @@ class LikesGeneratorService:
         self._users = users
         self._max_likes = max_likes
 
-    def start(self):
+    def start(self) -> None:
         all_posts = self._get_all_posts(self._users)
         users_by_posts_count = self._sort_users_by_posts_count(self._users)
 

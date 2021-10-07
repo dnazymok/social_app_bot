@@ -7,7 +7,7 @@ class Config:
         self.path_to_config = 'config.yml'
 
     @property
-    def data(self):
+    def data(self) -> dict:
         try:
             with open(self.path_to_config) as f:
                 config_data = yaml.safe_load(f)

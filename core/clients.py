@@ -2,7 +2,7 @@ import requests
 import logging
 
 from abc import ABC, abstractmethod
-from requests import HTTPError
+from requests import HTTPError, Response
 from core.exceptions import BotApiException
 from core.config import Config
 
@@ -11,11 +11,11 @@ config = Config()
 
 class BaseClient(ABC):
     @abstractmethod
-    def post_request(self, *args, **kwargs):
+    def post_request(self, *args, **kwargs) -> Response:
         pass
 
     @abstractmethod
-    def get_request(self, *args, **kwargs):
+    def get_request(self, *args, **kwargs) -> Response:
         pass
 
 
@@ -23,7 +23,7 @@ class ApiClient(BaseClient):
     def __init__(self, api_url):
         self._api_url = api_url
 
-    def post_request(self, path, data=None, auth=None, headers=None):
+    def post_request(self, path, data=None, auth=None, headers=None) -> Response:
         try:
             response = requests.post(f'{self._api_url}{path}', data=data,
                                      headers=headers)
@@ -32,7 +32,7 @@ class ApiClient(BaseClient):
             raise BotApiException(e)
         return response
 
-    def get_request(self, path, params=None, auth=None, headers=None):
+    def get_request(self, path, params=None, auth=None, headers=None) -> Response:
         try:
             response = requests.get(f'{self._api_url}{path}', params=params,
                                     headers=headers)
@@ -48,41 +48,43 @@ class UserApiClient:
         self._client = get_client()
         self._token = ''
 
-    def register(self):
-        self._client.post_request('users/', data=self._user.register_data)
+    def register(self) -> Response:
+        response = self._client.post_request('users/',
+                                             data=self._user.register_data)
         logging.info(f'{self._user.username} registered.')
+        return response
 
-    def login(self):
+    def login(self) -> None:
         if not self._token:
             self._token = self._get_access_token()
 
-    def logout(self):
+    def logout(self) -> None:
         self._token = ''
 
-    def create_post(self, post):
+    def create_post(self, post) -> Response:
         response = self._client.post_request('posts/', data=vars(post),
                                              headers=self._auth_headers)
         logging.info(f'{self._user.username} created post.')
         return response
 
-    def like_post(self, post_id):
+    def like_post(self, post_id) -> Response:
         response = self._client.post_request(f'posts/{post_id}/likes',
                                              headers=self._auth_headers)
         logging.info(f'{self._user.username} liked post {post_id}')
         return response
 
-    def _get_access_token(self):
+    def _get_access_token(self) -> str:
         response = self._client.post_request('token/',
                                              data=self._user.login_data)
         return response.json()['access']
 
-    def _get_refresh_token(self):
+    def _get_refresh_token(self) -> str:
         response = self._client.post_request('token/',
                                              data=self._user.login_data)
         return response.json()['refresh']
 
     @property
-    def _auth_headers(self):
+    def _auth_headers(self) -> dict:
         return {'Authorization': f'Bearer {self._token}'}
 
 
@@ -91,5 +93,5 @@ CLIENTS = {
 }
 
 
-def get_client(client='rest', api_url=config.data['api_url']):
+def get_client(client='rest', api_url=config.data['api_url']) -> BaseClient:
     return CLIENTS[client](api_url)
