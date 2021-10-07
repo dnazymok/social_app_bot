@@ -47,7 +47,12 @@ class AutomatedBot:
                 user.api.create_post()
 
     def _like_posts(self):  # todo has not reached max likes
-        user_with_most_posts = self._get_user_with_most_posts()
+        user_with_most_posts = self._get_user_with_most_posts(self._users)
+        users_with_zero_liked_post = self._get_users_with_zero_liked_post(self._users)
+        posts_to_like = self._get_posts_from_users(users_with_zero_liked_post)
+
+        # get random post from user, get id, make post request
+        # in this class make user.post.likes.append(Like) if request 201
 
     def _get_user_with_most_posts(self, users: [User]):  # todo in another class
         for user in users:
@@ -56,6 +61,19 @@ class AutomatedBot:
                 user_with_most_posts = user
         return user_with_most_posts
 
+    def _get_users_with_zero_liked_post(self, users: [User]):
+        users_with_zero_liked_post = []
+        for user in users:
+            if user.is_zero_liked_post:
+                users_with_zero_liked_post.append(user)
+        return users_with_zero_liked_post
+
+    def _get_posts_from_users(self, users: [User]):
+        posts = []
+        for user in users:
+            for post in user.posts:
+                posts.append(post)
+        return posts
 
     #  users creating (UserFactory)
     #  users register (UserApiClient)

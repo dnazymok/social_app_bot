@@ -27,7 +27,7 @@ class UserApiClient:
         response = self._client.post_request('posts/', data=vars(post),
                                   headers=self._auth_headers)
         post.id = response.json()['id']
-        self._user.posts.append(post)
+        self._user.posts.append(post)  # todo in another class
         logging.info(f'{self._user.username} created post.')
 
     def like_post(self, post_id):
