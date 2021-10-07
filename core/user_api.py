@@ -25,22 +25,25 @@ class UserApiClient:
     def create_post(self):
         post = self._post_factory().make_post()
         response = self._client.post_request('posts/', data=vars(post),
-                                  headers=self._auth_headers)
+                                             headers=self._auth_headers)
         post.id = response.json()['id']
         self._user.posts.append(post)  # todo in another class
         logging.info(f'{self._user.username} created post.')
 
     def like_post(self, post_id):
-        self._client.post_request(f'posts/{post_id}/likes',
-                                  headers=self._auth_headers)
+        response = self._client.post_request(f'posts/{post_id}/likes',
+                                             headers=self._auth_headers)
         logging.info(f'{self._user.username} liked post {post_id}')
+        return response
 
     def _get_access_token(self):
-        response = self._client.post_request('token/', data=self._user.login_data)
+        response = self._client.post_request('token/',
+                                             data=self._user.login_data)
         return response.json()['access']
 
     def _get_refresh_token(self):
-        response = self._client.post_request('token/', data=self._user.login_data)
+        response = self._client.post_request('token/',
+                                             data=self._user.login_data)
         return response.json()['refresh']
 
     @property
