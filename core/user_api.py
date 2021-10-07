@@ -1,5 +1,5 @@
 import logging
-import clients
+from core import clients
 
 
 class UserApiClient:

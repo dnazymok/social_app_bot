@@ -1,5 +1,5 @@
-from post import Post
-from user_api import UserApiClient
+from core.post import Post
+from core.user_api import UserApiClient
 
 
 class User:

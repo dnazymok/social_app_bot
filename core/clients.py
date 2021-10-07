@@ -1,8 +1,8 @@
 import requests
 from abc import ABC, abstractmethod
 from requests import HTTPError
-from exceptions import BotApiException
-from config import Config
+from core.exceptions import BotApiException
+from core.config import Config
 
 config = Config()
 

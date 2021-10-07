@@ -1,10 +1,10 @@
 import yaml
-from exceptions import ConfigNotFoundError
+from core.exceptions import ConfigNotFoundError
 
 
 class Config:
     def __init__(self):
-        self.path_to_config = '../config.yml'
+        self.path_to_config = 'config.yml'
 
     @property
     def data(self):

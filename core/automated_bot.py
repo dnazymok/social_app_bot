@@ -2,10 +2,10 @@ import logging
 import random
 
 from typing import Type
-from factories.user_factories import BaseUserFactory
-from factories.post_factories import BasePostFactory
-from user import User
-from services import LikesGeneratorService
+from core.factories.user_factories import BaseUserFactory
+from core.factories.post_factories import BasePostFactory
+from core.user import User
+from core.services import LikesGeneratorService
 
 
 class AutomatedBot:

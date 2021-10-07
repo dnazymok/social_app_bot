@@ -1,8 +1,8 @@
-from exceptions import BotApiException, ConfigNotFoundError
-from automated_bot import AutomatedBot
-from factories.user_factories import FakeUserFactory
-from factories.post_factories import FakePostFactory
-from config import Config
+from core.exceptions import BotApiException, ConfigNotFoundError
+from core.automated_bot import AutomatedBot
+from core.factories.user_factories import FakeUserFactory
+from core.factories.post_factories import FakePostFactory
+from core.config import Config
 
 
 def main():
@@ -19,5 +19,5 @@ def main():
 
 if __name__ == '__main__':
     import logging.config
-    logging.config.fileConfig('../logging.conf')
+    logging.config.fileConfig('logging.conf')
     main()
