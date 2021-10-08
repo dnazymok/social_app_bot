@@ -78,11 +78,6 @@ class UserApiClient:
                                              data=self._user.login_data)
         return response.json()['access']
 
-    def _get_refresh_token(self) -> str:
-        response = self._client.post_request('token/',
-                                             data=self._user.login_data)
-        return response.json()['refresh']
-
     @property
     def _auth_headers(self) -> dict:
         return {'Authorization': f'Bearer {self._token}'}
