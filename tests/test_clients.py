@@ -5,25 +5,29 @@ from unittest.mock import Mock, patch
 
 
 class TestApiClient:
-    post_data = {'title': 'foo',
-                 'body': 'bar',
-                 'userId': 1, }
-
     @pytest.fixture()
     def api_client(self):
-        return ApiClient('https://jsonplaceholder.typicode.com')
+        return ApiClient('127.0.0.1')
 
-    @pytest.mark.parametrize('path',
-                             ['/posts', '/comments', '/albums', '/photos'])
-    def test_post_request(self, api_client, path):
-        response = api_client.post_request(path=path, data=self.post_data)
-        assert response.status_code == 201
+    @pytest.fixture()
+    def response_mock(self):
+        response = Mock()
+        response.ok = True
+        return response
 
-    @pytest.mark.parametrize('path',
-                             ['/posts', '/comments', '/albums', '/photos'])
-    def test_get_request(self, api_client, path):
-        response = api_client.get_request(path=path)
-        assert response.status_code == 200
+    @pytest.fixture()
+    def post_data(self):
+        return {'title': 'foo', 'body': 'bar', 'userId': 1}
+
+    def test_post_request(self, api_client, response_mock, post_data):
+        with patch('requests.post', return_value=response_mock):
+            response = api_client.post_request(path='/', data=post_data)
+            assert response.ok
+
+    def test_get_request(self, api_client, response_mock):
+        with patch('requests.get', return_value=response_mock):
+            response = api_client.get_request(path='/')
+            assert response.ok
 
 
 class TestUserApiClient:
@@ -44,7 +48,8 @@ class TestUserApiClient:
     def test_register(self, user_api_client, response_mock):
         with patch.object(user_api_client._client, 'post_request',
                           return_value=response_mock):
-            assert user_api_client.like_post(1).status_code == 201
+            response = user_api_client.like_post(1)
+            assert response.status_code == 201
 
     def test_login(self, user_api_client):
         get_access_token_mock = Mock(return_value='token')
@@ -62,12 +67,14 @@ class TestUserApiClient:
         post = Mock()
         with patch.object(user_api_client._client, 'post_request',
                           return_value=response_mock):
-            assert user_api_client.create_post(post).status_code == 201
+            response = user_api_client.create_post(post)
+            assert response.status_code == 201
 
     def test_like_post(self, user_api_client, response_mock):
         with patch.object(user_api_client._client, 'post_request',
                           return_value=response_mock):
-            assert user_api_client.like_post(1).status_code == 201
+            response = user_api_client.like_post(1)
+            assert response.status_code == 201
 
     def test_get_access_token(self, user_api_client, response_mock):
         response_mock.json = Mock(return_value={'access': 'access_token'})
