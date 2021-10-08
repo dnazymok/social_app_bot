@@ -36,42 +36,41 @@ class TestUserApiClient:
         return UserApiClient(user)
 
     @pytest.fixture()
-    def user_api_client_with_mock_client(self, user):
-        user_api_client = UserApiClient(user)
-        client_mock = Mock()
-        response_mock = Mock()
-        response_mock.status_code = 201
-        client_mock.post_request = Mock(return_value=response_mock)
-        user_api_client._client = client_mock
-        return user_api_client
+    def response_mock(self):
+        response = Mock()
+        response.status_code = 201
+        return response
 
-    def test_register(self, user_api_client_with_mock_client):
-        assert user_api_client_with_mock_client.register().status_code == 201
+    def test_register(self, user_api_client, response_mock):
+        with patch.object(user_api_client._client, 'post_request',
+                          return_value=response_mock):
+            assert user_api_client.like_post(1).status_code == 201
 
     def test_login(self, user_api_client):
         get_access_token_mock = Mock(return_value='token')
-        user_api_client._get_access_token = get_access_token_mock
-        user_api_client.login()
-        assert user_api_client._token == 'token'
+        with patch.object(user_api_client, '_get_access_token',
+                          return_value=get_access_token_mock()):
+            user_api_client.login()
+            assert user_api_client._token == 'token'
 
     def test_logout(self, user_api_client):
         user_api_client._token = 'token'
         user_api_client.logout()
         assert user_api_client._token == ''
 
-    def test_create_post(self, user_api_client_with_mock_client):
+    def test_create_post(self, user_api_client, response_mock):
         post = Mock()
-        assert user_api_client_with_mock_client.create_post(
-            post).status_code == 201
+        with patch.object(user_api_client._client, 'post_request',
+                          return_value=response_mock):
+            assert user_api_client.create_post(post).status_code == 201
 
-    def test_like_post(self, user_api_client_with_mock_client):
-        assert user_api_client_with_mock_client.like_post(1).status_code == 201
+    def test_like_post(self, user_api_client, response_mock):
+        with patch.object(user_api_client._client, 'post_request',
+                          return_value=response_mock):
+            assert user_api_client.like_post(1).status_code == 201
 
-    def test_get_access_token(self, user_api_client):
-        client_mock = Mock()
-        response_mock = Mock()
+    def test_get_access_token(self, user_api_client, response_mock):
         response_mock.json = Mock(return_value={'access': 'access_token'})
-        client_mock.post_request = Mock(return_value=response_mock)
-        user_api_client._client = client_mock
-        assert user_api_client._get_access_token() == 'access_token'
-
+        with patch.object(user_api_client._client, 'post_request',
+                          return_value=response_mock):
+            assert user_api_client._get_access_token() == 'access_token'
