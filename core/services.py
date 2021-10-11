@@ -9,7 +9,7 @@ class LikesGeneratorService:
         self._max_likes = max_likes
 
     def start(self) -> None:
-        all_posts = self._get_all_posts(self._users)
+        all_posts = self._get_posts_from_users(self._users)
         users_by_posts_count = self._sort_users_by_posts_count(self._users)
 
         for user in users_by_posts_count:
@@ -43,13 +43,6 @@ class LikesGeneratorService:
         return users_with_zero_liked_post
 
     def _get_posts_from_users(self, users: [User]) -> [Post]:
-        posts = []
-        for user in users:
-            for post in user.posts:
-                posts.append(post)
-        return posts
-
-    def _get_all_posts(self, users: [User]) -> [Post]:
         posts = []
         for user in users:
             for post in user.posts:
