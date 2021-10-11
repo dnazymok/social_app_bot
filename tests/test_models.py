@@ -21,6 +21,15 @@ class TestUser:
         post.likes.append(like)
         return post
 
+    def test_register_data(self, user):
+        assert user.register_data['email'] == user.email
+        assert user.register_data['username'] == user.username
+        assert user.register_data['password'] == user.password
+
+    def test_login_data(self, user):
+        assert user.register_data['username'] == user.username
+        assert user.register_data['password'] == user.password
+
     def test_posts_count(self, user, post):
         assert user.posts_count == 0
         user.posts.append(post)
