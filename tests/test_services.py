@@ -31,13 +31,9 @@ class TestLikesGeneratorService:
         return LikesGeneratorService(users_with_posts, 10)
 
     def test_get_posts_from_users(self, like_service, users_with_posts):
-        posts = []
-        for user in users_with_posts:
-            for post in user.posts:
-                posts.append(post)
         assert len(
             like_service._get_posts_from_users(like_service._users)) == len(
-            posts)
+            [post for user in users_with_posts for post in user.posts])
 
     def test_get_post_by_id(self, like_service):
         post_1 = Mock()
