@@ -2,7 +2,7 @@ from unittest.mock import Mock
 
 import pytest
 
-from core.models import User, Like, Post
+from core.models import User, Post
 
 
 class TestUser:
