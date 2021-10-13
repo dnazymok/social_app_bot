@@ -68,7 +68,7 @@ class UserApiClient:
         return response
 
     def like_post(self, post_id) -> Response:
-        response = self._client.post_request(f'posts/{post_id}/likes',
+        response = self._client.post_request(f'posts/{post_id}/like/',
                                              headers=self._auth_headers)
         logging.info(f'{self._user.username} liked post {post_id}')
         return response
