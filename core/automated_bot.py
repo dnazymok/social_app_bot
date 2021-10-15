@@ -1,13 +1,11 @@
 import logging
 import random
 
-from typing import Type
-
-from core.factories.user_factories import BaseUserFactory, FakeUserFactory
-from core.factories.post_factories import BasePostFactory, FakePostFactory
+from core.factories.user_factories import get_user_factory
+from core.factories.post_factories import get_post_factory
 from core.models import User
 from core.services import LikesGeneratorService
-from core.configs import YmlConfig, BaseConfig
+from core.configs import get_config
 
 
 class AutomatedBot:
