@@ -1,13 +1,17 @@
 import pytest
 
 from core.clients import ApiClient, UserApiClient
+from core.configs import get_config
 from unittest.mock import Mock, patch
+
+
+API_URL = get_config().data['api_url']
 
 
 class TestApiClient:
     @pytest.fixture()
     def api_client(self):
-        return ApiClient('127.0.0.1')
+        return ApiClient(API_URL)
 
     @pytest.fixture()
     def response_mock(self):
