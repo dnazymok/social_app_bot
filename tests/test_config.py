@@ -1,17 +1,17 @@
 import pytest
 
-from core.config import Config
+from core.configs import get_config
 from core.exceptions import ConfigNotFoundError
 
 
 class TestConfig:
     @pytest.fixture()
     def config(self):
-        return Config()
+        return get_config()
 
     @pytest.fixture()
     def config_with_wrong_path(self):
-        config = Config()
+        config = get_config()
         config.path_to_config = ''
         return config
 

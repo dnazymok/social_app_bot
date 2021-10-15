@@ -1,4 +1,6 @@
 from abc import ABC, abstractmethod
+from typing import Type
+
 from faker import Faker
 from core.models import User
 
@@ -17,3 +19,13 @@ class FakeUserFactory(BaseUserFactory):
         return User(username=self.fake.user_name(),
                     email=self.fake.email(),
                     password=self.fake.password())
+
+
+USER_FACTORIES = {
+    'fake': FakeUserFactory
+}
+
+
+def get_user_factory(user_factory='fake') -> Type[BaseUserFactory]:
+    return USER_FACTORIES[user_factory]()
+

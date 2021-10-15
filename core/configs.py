@@ -1,8 +1,19 @@
+from typing import Type
+
 import yaml
+
+from abc import ABC, abstractmethod
 from core.exceptions import ConfigNotFoundError
 
 
-class Config:
+class BaseConfig(ABC):
+    @property
+    @abstractmethod
+    def data(self):
+        pass
+
+
+class YmlConfig:
     def __init__(self):
         self.path_to_config = 'config.yml'
 
@@ -14,3 +25,12 @@ class Config:
             return config_data
         except FileNotFoundError as e:
             raise ConfigNotFoundError(e)
+
+
+CONFIGS = {
+    'yml': YmlConfig
+}
+
+
+def get_config(config='yml') -> Type[BaseConfig]:
+    return CONFIGS[config]()

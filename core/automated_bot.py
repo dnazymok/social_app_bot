@@ -2,20 +2,20 @@ import logging
 import random
 
 from typing import Type
-from core.factories.user_factories import BaseUserFactory
-from core.factories.post_factories import BasePostFactory
+
+from core.factories.user_factories import BaseUserFactory, FakeUserFactory
+from core.factories.post_factories import BasePostFactory, FakePostFactory
 from core.models import User
 from core.services import LikesGeneratorService
+from core.configs import YmlConfig, BaseConfig
 
 
 class AutomatedBot:
-    def __init__(self, user_factory: Type[BaseUserFactory],
-                 post_factory: Type[BasePostFactory],
-                 config):
-        self._config = config()
+    def __init__(self):
+        self._config = get_config()
         self._users: [User] = []
-        self._user_factory = user_factory()
-        self._post_factory = post_factory()
+        self._user_factory = get_user_factory()
+        self._post_factory = get_post_factory()
 
     def start(self) -> None:
         self._create_users()

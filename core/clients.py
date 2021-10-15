@@ -4,9 +4,9 @@ import logging
 from abc import ABC, abstractmethod
 from requests import HTTPError, Response
 from core.exceptions import BotApiException
-from core.config import Config
+from core.configs import get_config
 
-config = Config()
+config = get_config()
 
 
 class BaseClient(ABC):
